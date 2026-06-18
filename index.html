@@ -6,14 +6,13 @@
     <title>Data Pribadi - Muhammad Rafi Sofyan</title>
     <style>
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
         body {
-            background-color: #f4f7f6;
+            background-color: #f0f2f5;
             color: #333;
             display: flex;
             justify-content: center;
@@ -21,317 +20,238 @@
             min-height: 100vh;
             padding: 20px;
         }
-
-        .container {
+        .card {
             background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             width: 100%;
-            max-width: 600px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #6366f1, #a855f7);
-            color: white;
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        .avatar {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            margin: 0 auto 15px;
-            border: 4px solid rgba(255,255,255,0.3);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 40px;
-        }
-
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .header p {
-            font-size: 15px;
-            opacity: 0.9;
-        }
-
-        .content {
+            max-width: 700px;
             padding: 30px;
+            position: relative;
         }
-
-        .section-title {
-            font-size: 15px;
-            color: #6366f1;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 5px;
-            margin-top: 25px;
-        }
-
-        .section-title:first-child {
-            margin-top: 0;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
+        .lock-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44, 62, 80, 0.95);
             display: flex;
             flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            color: white;
+            transition: all 0.3s ease;
         }
-
-        .form-group label {
-            font-size: 13px;
-            color: #718096;
-            margin-bottom: 5px;
-            font-weight: 500;
+        .lock-screen.hidden {
+            display: none;
         }
-
-        .form-group input, .form-group textarea {
-            padding: 11px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            font-size: 15px;
-            color: #2d3748;
-            background-color: #fff;
-            transition: all 0.3s;
-            width: 100%;
-        }
-
-        /* Desain visual saat data terkunci otomatis */
-        .form-group input:disabled, .form-group textarea:disabled {
-            background-color: #f8fafc;
-            border-color: #e2e8f0;
-            color: #1e293b;
-            cursor: not-allowed;
-            font-weight: 600;
-        }
-
-        .skills-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 5px;
-        }
-
-        .skill-badge {
-            background: #eef2ff;
-            color: #6366f1;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            border: 1px solid #e0e7ff;
-        }
-
-        .button-group {
-            margin-top: 30px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 12px;
+        .lock-box {
+            background: #fff;
+            padding: 30px;
             border-radius: 8px;
-            font-weight: bold;
-            font-size: 15px;
-            cursor: pointer;
-            border: none;
-            transition: background 0.3s;
-        }
-
-        .btn-save {
-            background: #10b981;
-            color: white;
-        }
-
-        .btn-save:hover {
-            background: #059669;
-        }
-
-        .btn-unlock {
-            background: #f59e0b;
-            color: white;
-        }
-
-        .btn-unlock:hover {
-            background: #d97706;
-        }
-
-        .status-badge {
+            width: 90%;
+            max-width: 350px;
             text-align: center;
-            padding: 8px;
+            color: #333;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .lock-box h3 {
             margin-bottom: 15px;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: bold;
+            color: #2c3e50;
         }
-
-        .status-locked {
-            background-color: #fee2e2;
-            color: #ef4444;
-        }
-
-        .status-unlocked {
-            background-color: #dcfce7;
-            color: #15803d;
-        }
-
-        .footer {
+        .lock-box input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
             text-align: center;
-            padding: 20px;
+        }
+        .btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background: #2980b9;
+        }
+        .btn-lock {
+            background: #e74c3c;
+            width: auto;
+            float: right;
+        }
+        .btn-lock:hover {
+            background: #c0392b;
+        }
+        .header-section {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 20px;
+        }
+        .profile-img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #3498db;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        .header-text h1 {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .header-text p {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #34495e;
+            font-size: 14px;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #bdc3c7;
+            border-radius: 6px;
+            font-size: 15px;
+            background-color: #fafafa;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #3498db;
+            outline: none;
+            background-color: #fff;
+        }
+        .status-bar {
             font-size: 12px;
-            color: #a0aec0;
-            background: #f8fafc;
+            color: #95a5a6;
+            margin-top: 20px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <div class="avatar">👤</div>
-        <h1 id="display-nama">MUHAMMAD RAFI SOFYAN</h1>
-        <p id="display-status">Personal E-Portfolio</p>
+    <div id="lockScreen" class="lock-screen">
+        <div class="lock-box">
+            <h3>Halaman Terkunci</h3>
+            <p style="font-size: 13px; color: #666; margin-bottom: 15px;">Masukkan PIN untuk membuka (Default: 1234)</p>
+            <input type="password" id="pinInput" placeholder="Masukkan PIN" onkeypress="handleKeyPress(event)">
+            <button class="btn" onclick="unlockPage()">Buka Data</button>
+            <p id="errorMsg" style="color: red; font-size: 13px; margin-top: 10px; display: none;">PIN Salah!</p>
+        </div>
     </div>
 
-    <div class="content">
-        <div id="status-kunci" class="status-badge status-locked">🔒 Status: Terkunci Otomatis</div>
+    <div class="card">
+        <button class="btn btn-lock" onclick="lockPage()">Kunci Halaman</button>
+        <div style="clear: both;"></div>
 
-        <form id="biodata-form">
-            <div class="section-title">Biodata Pribadi</div>
-            
+        <div class="header-section">
+            <img src="FOTO_ANDA_BASE64_SUDAH_ADA_DI_FILE_ATAS" alt="Foto Muhammad Rafi Sofyan" class="profile-img">
+            <div class="header-text">
+                <h1>Kumpulan Data Pribadi</h1>
+                <p>Data dapat diisi/diedit manual. Terkunci otomatis setelah 5 menit tidak ada aktivitas.</p>
+            </div>
+        </div>
+
+        <form id="profileForm">
             <div class="form-group">
-                <label for="nama">Nama Lengkap</label>
-                <input type="text" id="nama" value="MUHAMMAD RAFI SOFYAN" disabled>
+                <label>Nama Lengkap</label>
+                <input type="text" value="MUHAMMAD RAFI SOFYAN">
             </div>
-
             <div class="form-group">
-                <label for="ttl">Tempat, Tanggal Lahir</label>
-                <input type="text" id="ttl" value="Permanu pakisaji Malang, 10-07-2008" disabled>
+                <label>Tempat, Tanggal Lahir</label>
+                <input type="text" value="Permanu pakisaji Malang, 10-07-2008">
             </div>
-
             <div class="form-group">
-                <label for="gender">Jenis Kelamin</label>
-                <input type="text" id="gender" value="Laki-Laki" disabled>
+                <label>Jenis Kelamin</label>
+                <input type="text" value="Laki-Laki">
             </div>
-
             <div class="form-group">
-                <label for="alamat">Alamat Lengkap</label>
-                <textarea id="alamat" rows="3" disabled>jalan darmorejo desa Permanu Rt02 Rw03 Kec.Pakisaji Kab.Malang Prov. Jawa Timur</textarea>
+                <label>Alamat Lengkap</label>
+                <textarea>jalan darmorejo desa Permanu Rt02 Rw03 Kec.Pakisaji Kab.Malang Prov.Jawa Timur</textarea>
             </div>
-
-            <div class="section-title">Kontak</div>
-
             <div class="form-group">
-                <label for="hp">Nomor Telepon</label>
-                <input type="tel" id="hp" value="+62 831-5304-1034" disabled>
+                <label>Email</label>
+                <input type="email" value="rafisofyan114111@gmail.com">
             </div>
-
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" value="rafisofyan114111@gmail.com" disabled>
+                <label>No. Telepon</label>
+                <input type="text" value="+62 831-5304-1034">
             </div>
-
-            <div class="section-title">Keahlian / Fokus</div>
-            <div class="skills-container">
-                <span class="skill-badge">HTML</span>
-                <span class="skill-badge">PUISI</span>
-                <span class="skill-badge">DESAIN GRAFIS</span>
-            </div>
-
-            <div class="button-group">
-                <button type="button" class="btn btn-save" id="btn-simpan" onclick="kunciDanSimpan()" style="display: none;">🔒 Simpan & Kunci</button>
-                <button type="button" class="btn btn-unlock" id="btn-buka" onclick="bukaKunci()">🔓 Buka Kunci Untuk Edit</button>
+            <div class="form-group">
+                <label>Keahlian / Fokus</label>
+                <input type="text" value="HTML, PUISI, dan DESAIN GRAFIS">
             </div>
         </form>
+
+        <div class="status-bar">
+            Auto-lock aktif. Dibuat khusus untuk Muhammad Rafi Sofyan.
+        </div>
     </div>
 
-    <div class="footer">
-        &copy; 2026 E-Portfolio Terkunci | Muhammad Rafi Sofyan.
-    </div>
-</div>
+    <script>
+        const CORRECT_PIN = "1234"; // Kamu bisa ganti angka '1234' ini dengan PIN buatanmu sendiri
+        let inactivityTimer;
 
-<script>
-    const inputIds = ['nama', 'ttl', 'gender', 'alamat', 'hp', 'email'];
+        function unlockPage() {
+            const pinInput = document.getElementById('pinInput');
+            const errorMsg = document.getElementById('errorMsg');
+            if (pinInput.value === CORRECT_PIN) {
+                document.getElementById('lockScreen').classList.add('hidden');
+                errorMsg.style.display = 'none';
+                pinInput.value = '';
+                resetInactivityTimer();
+            } else {
+                errorMsg.style.display = 'block';
+                pinInput.value = '';
+            }
+        }
 
-    window.onload = function() {
-        // KODE BARU: Memaksa menghapus memori lama agar data Muhammad Rafi Sofyan langsung muncul
-        if (localStorage.getItem('currentOwner') !== 'RafiSofyan_v3') {
-            localStorage.clear(); // Bersihkan memori teks contoh sebelumnya
-            localStorage.setItem('currentOwner', 'RafiSofyan_v3');
-            
-            // Masukkan data asli ke memori baru
-            inputIds.forEach(id => {
-                localStorage.setItem(id, document.getElementById(id).value);
+        function handleKeyPress(event) {
+            if (event.key === "Enter") unlockPage();
+        }
+
+        function lockPage() {
+            document.getElementById('lockScreen').classList.remove('hidden');
+            clearTimeout(inactivityTimer);
+        }
+
+        function resetInactivityTimer() {
+            clearTimeout(inactivityTimer);
+            // 300000 milidetik = 5 menit
+            inactivityTimer = setTimeout(lockPage, 300000); 
+        }
+
+        window.onload = function() {
+            lockPage(); // Kunci halaman saat pertama kali dimuat
+            const activityEvents = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart'];
+            activityEvents.forEach(function(name) {
+                document.addEventListener(name, function() {
+                    if (document.getElementById('lockScreen').classList.contains('hidden')) {
+                        resetInactivityTimer();
+                    }
+                }, true);
             });
-            localStorage.setItem('isLocked', 'true');
-        } else {
-            // Jika memori sudah benar, muat data yang ada
-            inputIds.forEach(id => {
-                const savedValue = localStorage.getItem(id);
-                if (savedValue !== null) document.getElementById(id).value = savedValue;
-            });
-        }
-
-        const isLocked = localStorage.getItem('isLocked') !== 'false';
-        terapkanStatusKunci(isLocked);
-    };
-
-    function kunciDanSimpan() {
-        inputIds.forEach(id => {
-            const value = document.getElementById(id).value;
-            localStorage.setItem(id, value);
-        });
-
-        localStorage.setItem('isLocked', 'true');
-        terapkanStatusKunci(true);
-        
-        document.getElementById('display-nama').innerText = document.getElementById('nama').value;
-        alert("Data baru berhasil disimpan dan dikunci otomatis!");
-    }
-
-    function bukaKunci() {
-        const konfirmasi = confirm("Apakah Anda yakin ingin membuka kunci untuk mengedit data?");
-        if (konfirmasi) {
-            localStorage.setItem('isLocked', 'false');
-            terapkanStatusKunci(false);
-        }
-    }
-
-    function terapkanStatusKunci(lock) {
-        const statusBadge = document.getElementById('status-kunci');
-        const btnSimpan = document.getElementById('btn-simpan');
-        const btnBuka = document.getElementById('btn-buka');
-
-        inputIds.forEach(id => {
-            document.getElementById(id).disabled = lock;
-        });
-
-        if (lock) {
-            statusBadge.innerText = "🔒 Status: Terkunci Otomatis";
-            statusBadge.className = "status-badge status-locked";
-            btnSimpan.style.display = "none";
-            btnBuka.style.display = "block";
-            
-            document.getElementById('display-nama').innerText = document.getElementById('nama').value;
-        } else {
-            statusBadge.innerText = "🔓 Mode Edit: Silakan Isi / Ubah Data";
-            statusBadge.className = "status-badge status-unlocked";
-            btnSimpan.style.display = "block";
-            btnBuka.style.display = "none";
-        }
-    }
-</script>
-
+        };
+    </script>
 </body>
 </html>
