@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Pribadi Interaktif</title>
+    <title>Data Pribadi - Muhammad Rafi Sofyan</title>
     <style>
         * {
             margin: 0;
@@ -32,7 +32,7 @@
         }
 
         .header {
-            background: linear-gradient(135deg, #4f46e5, #06b6d4);
+            background: linear-gradient(135deg, #6366f1, #a855f7);
             color: white;
             text-align: center;
             padding: 40px 20px;
@@ -54,6 +54,13 @@
         .header h1 {
             font-size: 24px;
             margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .header p {
+            font-size: 15px;
+            opacity: 0.9;
         }
 
         .content {
@@ -61,14 +68,14 @@
         }
 
         .section-title {
-            font-size: 16px;
-            color: #4f46e5;
+            font-size: 15px;
+            color: #6366f1;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 15px;
             border-bottom: 2px solid #e5e7eb;
             padding-bottom: 5px;
-            margin-top: 20px;
+            margin-top: 25px;
         }
 
         .section-title:first-child {
@@ -82,14 +89,14 @@
         }
 
         .form-group label {
-            font-size: 14px;
+            font-size: 13px;
             color: #718096;
             margin-bottom: 5px;
             font-weight: 500;
         }
 
         .form-group input, .form-group textarea {
-            padding: 10px;
+            padding: 11px;
             border: 1px solid #cbd5e1;
             border-radius: 6px;
             font-size: 15px;
@@ -98,11 +105,11 @@
             transition: all 0.3s;
         }
 
-        /* Gaya visual saat input dikunci (disabled) */
+        /* Desain visual saat data terkunci otomatis */
         .form-group input:disabled, .form-group textarea:disabled {
             background-color: #f8fafc;
             border-color: #e2e8f0;
-            color: #475569;
+            color: #1e293b;
             cursor: not-allowed;
             font-weight: 600;
         }
@@ -175,79 +182,93 @@
 <div class="container">
     <div class="header">
         <div class="avatar">👤</div>
-        <h1 id="display-nama">Biodata Mandiri</h1>
-        <p>Isi data Anda di bawah ini</p>
+        <h1 id="display-nama">MUHAMMAD RAFI SOFYAN</h1>
+        <p id="display-instansi">SMK AL KAAFFAH - palajar</p>
     </div>
 
     <div class="content">
-        <div id="status-kunci" class="status-badge status-unlocked">🔓 Mode Edit: Silakan Isi Data</div>
+        <!-- Status Kunci -->
+        <div id="status-kunci" class="status-badge status-locked">🔒 Status: Terkunci Otomatis</div>
 
         <form id="biodata-form">
             <div class="section-title">Biodata Pribadi</div>
             
             <div class="form-group">
                 <label for="nama">Nama Lengkap</label>
-                <input type="text" id="nama" placeholder="Masukkan nama lengkap">
+                <input type="text" id="nama" value="MUHAMMAD RAFI SOFYAN" disabled>
             </div>
 
             <div class="form-group">
-                <label for="ttl">Tempat, Tanggal Lahir</label>
-                <input type="text" id="ttl" placeholder="Contoh: Jakarta, 12 Agustus 1995">
+                <label for="instansi">Sekolah / Instansi</label>
+                <input type="text" id="instansi" value="SMK AL KAAFFAH" disabled>
             </div>
 
             <div class="form-group">
-                <label for="alamat">Alamat Tinggal</label>
-                <textarea id="alamat" rows="2" placeholder="Masukkan alamat lengkap"></textarea>
+                <label for="status">Status</label>
+                <input type="text" id="status" value="palajar" disabled>
+            </div>
+
+            <div class="form-group">
+                <label for="alamat">Alamat Lengkap</label>
+                <textarea id="alamat" rows="3" disabled>jalan darmorejo desa permanu Rt02 Rw03 Kec.Pakisaji Kab.Malang</textarea>
             </div>
 
             <div class="section-title">Kontak</div>
 
             <div class="form-group">
-                <label for="email">Alamat Email</label>
-                <input type="email" id="email" placeholder="contoh@email.com">
+                <label for="hp">Nomor HP / WhatsApp (Utama)</label>
+                <input type="tel" id="hp" value="+628315041034" disabled>
             </div>
 
             <div class="form-group">
-                <label for="hp">Nomor HP / WhatsApp</label>
-                <input type="tel" id="hp" placeholder="08xxxxxxxxxx">
+                <label for="email">Surel / Email</label>
+                <input type="email" id="email" value="muhammad.rafi162131@smk.belajar.id" disabled>
             </div>
 
+            <!-- Tombol Aksi -->
             <div class="button-group">
-                <button type="button" class="btn btn-save" id="btn-simpan" onclick="kunciDanSimpan()">🔒 Simpan & Kunci</button>
-                <button type="button" class="btn btn-unlock" id="btn-buka" onclick="bukaKunci()" style="display: none;">🔓 Buka Kunci</button>
+                <button type="button" class="btn btn-save" id="btn-simpan" onclick="kunciDanSimpan()" style="display: none;">🔒 Simpan & Kunci</button>
+                <button type="button" class="btn btn-unlock" id="btn-buka" onclick="bukaKunci()">🔓 Buka Kunci Untuk Edit</button>
             </div>
         </form>
     </div>
 
     <div class="footer">
-        &copy; 2026 Aplikasi Data Pribadi Terkunci Otomatis.
+        &copy; 2026 E-Portfolio Terkunci | Muhammad Rafi Sofyan.
     </div>
 </div>
 
 <script>
-    // List id input yang digunakan
-    const inputIds = ['nama', 'ttl', 'alamat', 'email', 'hp'];
+    // Id elemen input form
+    const inputIds = ['nama', 'instansi', 'status', 'alamat', 'hp', 'email'];
 
-    // Fungsi saat pertama kali halaman dimuat
+    // Inisialisasi awal saat halaman dibuka
     window.onload = function() {
-        // Cek apakah ada data yang tersimpan sebelumnya
-        inputIds.forEach(id => {
-            const savedValue = localStorage.getItem(id);
-            if (savedValue) {
-                document.getElementById(id).value = savedValue;
-            }
-        });
-
-        // Cek status apakah terakhir kali dikunci
-        const isLocked = localStorage.getItem('isLocked') === 'true';
-        if (isLocked) {
-            terapkanStatusKunci(true);
+        // Cek jika user pernah mengubah data di browser ini sebelumnya
+        let isSetup = localStorage.getItem('isSetupDone');
+        
+        if (!isSetup) {
+            // Jika pertama kali dibuka, simpan data bawaan gambar ke LocalStorage
+            inputIds.forEach(id => {
+                localStorage.setItem(id, document.getElementById(id).value);
+            });
+            localStorage.setItem('isLocked', 'true');
+            localStorage.setItem('isSetupDone', 'true');
+        } else {
+            // Jika sudah ada riwayat modifikasi, muat data dari LocalStorage
+            inputIds.forEach(id => {
+                const savedValue = localStorage.getItem(id);
+                if (savedValue !== null) document.getElementById(id).value = savedValue;
+            });
         }
+
+        // Terapkan status kunci terakhir
+        const isLocked = localStorage.getItem('isLocked') !== 'false';
+        terapkanStatusKunci(isLocked);
     };
 
-    // Fungsi untuk mengunci input dan menyimpan data
+    // Fungsi untuk mengunci kembali form dan menyimpan perubahan
     function kunciDanSimpan() {
-        // Simpan data ke LocalStorage browser
         inputIds.forEach(id => {
             const value = document.getElementById(id).value;
             localStorage.setItem(id, value);
@@ -256,25 +277,23 @@
         localStorage.setItem('isLocked', 'true');
         terapkanStatusKunci(true);
         
-        // Update nama di bagian header atas secara berkala
-        const namaInput = document.getElementById('nama').value;
-        if(namaInput) {
-            document.getElementById('display-nama').innerText = namaInput;
-        }
+        // Perbarui teks header
+        document.getElementById('display-nama').innerText = document.getElementById('nama').value;
+        document.getElementById('display-instansi').innerText = document.getElementById('instansi').value + " - " + document.getElementById('status').value;
 
-        alert("Data berhasil disimpan dan dikunci secara otomatis!");
+        alert("Perubahan berhasil disimpan dan data kembali terkunci otomatis!");
     }
 
-    // Fungsi untuk membuka kembali kunci input
+    // Fungsi membuka kunci agar bisa diisi manual
     function bukaKunci() {
-        const konfirmasi = confirm("Apakah Anda yakin ingin membuka kunci untuk mengubah data?");
+        const konfirmasi = confirm("Apakah Anda ingin membuka kunci untuk mengedit data?");
         if (konfirmasi) {
             localStorage.setItem('isLocked', 'false');
             terapkanStatusKunci(false);
         }
     }
 
-    // Fungsi pembantu untuk mengubah status UI (Terkunci / Terbuka)
+    // Fungsi pengatur UI form (Mengunci / Membuka)
     function terapkanStatusKunci(lock) {
         const statusBadge = document.getElementById('status-kunci');
         const btnSimpan = document.getElementById('btn-simpan');
@@ -290,12 +309,12 @@
             btnSimpan.style.display = "none";
             btnBuka.style.display = "block";
             
-            const namaInput = document.getElementById('nama').value;
-            if(namaInput) document.getElementById('display-nama').innerText = namaInput;
+            // Render ulang teks header dari input yang tersimpan
+            document.getElementById('display-nama').innerText = document.getElementById('nama').value;
+            document.getElementById('display-instansi').innerText = document.getElementById('instansi').value + " - " + document.getElementById('status').value;
         } else {
-            statusBadge.innerText = "🔓 Mode Edit: Silakan Isi Data";
+            statusBadge.innerText = "🔓 Mode Edit: Silakan Isi / Ubah Data";
             statusBadge.className = "status-badge status-unlocked";
-            btnSimpan.style.style = "block";
             btnSimpan.style.display = "block";
             btnBuka.style.display = "none";
         }
