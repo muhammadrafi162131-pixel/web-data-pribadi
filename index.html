@@ -103,6 +103,7 @@
             color: #2d3748;
             background-color: #fff;
             transition: all 0.3s;
+            width: 100%;
         }
 
         /* Desain visual saat data terkunci otomatis */
@@ -261,35 +262,31 @@
 </div>
 
 <script>
-    // Id elemen input form yang akan dikontrol oleh sistem penguncian
     const inputIds = ['nama', 'ttl', 'gender', 'alamat', 'hp', 'email'];
 
-    // Inisialisasi awal saat halaman dibuka
     window.onload = function() {
-        // Cek jika pengguna pernah memodifikasi data sebelumnya di browser ini
-        let isSetup = localStorage.getItem('isSetupDone_v2');
-        
-        if (!isSetup) {
-            // Simpan data parameter teks yang baru saja Anda berikan ke LocalStorage sebagai default awal
+        // KODE BARU: Memaksa menghapus memori lama agar data Muhammad Rafi Sofyan langsung muncul
+        if (localStorage.getItem('currentOwner') !== 'RafiSofyan_v3') {
+            localStorage.clear(); // Bersihkan memori teks contoh sebelumnya
+            localStorage.setItem('currentOwner', 'RafiSofyan_v3');
+            
+            // Masukkan data asli ke memori baru
             inputIds.forEach(id => {
                 localStorage.setItem(id, document.getElementById(id).value);
             });
             localStorage.setItem('isLocked', 'true');
-            localStorage.setItem('isSetupDone_v2', 'true');
         } else {
-            // Jika ada perubahan manual sebelumnya, muat data modifikasi tersebut
+            // Jika memori sudah benar, muat data yang ada
             inputIds.forEach(id => {
                 const savedValue = localStorage.getItem(id);
                 if (savedValue !== null) document.getElementById(id).value = savedValue;
             });
         }
 
-        // Terapkan status kunci terakhir
         const isLocked = localStorage.getItem('isLocked') !== 'false';
         terapkanStatusKunci(isLocked);
     };
 
-    // Fungsi untuk menyimpan perubahan data manual ke memori browser lalu menguncinya kembali
     function kunciDanSimpan() {
         inputIds.forEach(id => {
             const value = document.getElementById(id).value;
@@ -299,13 +296,10 @@
         localStorage.setItem('isLocked', 'true');
         terapkanStatusKunci(true);
         
-        // Perbarui teks nama di banner atas
         document.getElementById('display-nama').innerText = document.getElementById('nama').value;
-
         alert("Data baru berhasil disimpan dan dikunci otomatis!");
     }
 
-    // Fungsi untuk membuka sistem penguncian kolom form
     function bukaKunci() {
         const konfirmasi = confirm("Apakah Anda yakin ingin membuka kunci untuk mengedit data?");
         if (konfirmasi) {
@@ -314,7 +308,6 @@
         }
     }
 
-    // Mengatur kondisi elemen HTML form (Terbuka / Terkunci)
     function terapkanStatusKunci(lock) {
         const statusBadge = document.getElementById('status-kunci');
         const btnSimpan = document.getElementById('btn-simpan');
@@ -330,7 +323,6 @@
             btnSimpan.style.display = "none";
             btnBuka.style.display = "block";
             
-            // Render ulang teks nama di header
             document.getElementById('display-nama').innerText = document.getElementById('nama').value;
         } else {
             statusBadge.innerText = "🔓 Mode Edit: Silakan Isi / Ubah Data";
