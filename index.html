@@ -114,6 +114,23 @@
             font-weight: 600;
         }
 
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .skill-badge {
+            background: #eef2ff;
+            color: #6366f1;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid #e0e7ff;
+        }
+
         .button-group {
             margin-top: 30px;
             display: flex;
@@ -183,11 +200,10 @@
     <div class="header">
         <div class="avatar">👤</div>
         <h1 id="display-nama">MUHAMMAD RAFI SOFYAN</h1>
-        <p id="display-instansi">SMK AL KAAFFAH - palajar</p>
+        <p id="display-status">Personal E-Portfolio</p>
     </div>
 
     <div class="content">
-        <!-- Status Kunci -->
         <div id="status-kunci" class="status-badge status-locked">🔒 Status: Terkunci Otomatis</div>
 
         <form id="biodata-form">
@@ -199,33 +215,39 @@
             </div>
 
             <div class="form-group">
-                <label for="instansi">Sekolah / Instansi</label>
-                <input type="text" id="instansi" value="SMK AL KAAFFAH" disabled>
+                <label for="ttl">Tempat, Tanggal Lahir</label>
+                <input type="text" id="ttl" value="Permanu pakisaji Malang, 10-07-2008" disabled>
             </div>
 
             <div class="form-group">
-                <label for="status">Status</label>
-                <input type="text" id="status" value="palajar" disabled>
+                <label for="gender">Jenis Kelamin</label>
+                <input type="text" id="gender" value="Laki-Laki" disabled>
             </div>
 
             <div class="form-group">
                 <label for="alamat">Alamat Lengkap</label>
-                <textarea id="alamat" rows="3" disabled>jalan darmorejo desa permanu Rt02 Rw03 Kec.Pakisaji Kab.Malang</textarea>
+                <textarea id="alamat" rows="3" disabled>jalan darmorejo desa Permanu Rt02 Rw03 Kec.Pakisaji Kab.Malang Prov. Jawa Timur</textarea>
             </div>
 
             <div class="section-title">Kontak</div>
 
             <div class="form-group">
-                <label for="hp">Nomor HP / WhatsApp (Utama)</label>
-                <input type="tel" id="hp" value="+628315041034" disabled>
+                <label for="hp">Nomor Telepon</label>
+                <input type="tel" id="hp" value="+62 831-5304-1034" disabled>
             </div>
 
             <div class="form-group">
-                <label for="email">Surel / Email</label>
-                <input type="email" id="email" value="muhammad.rafi162131@smk.belajar.id" disabled>
+                <label for="email">Email</label>
+                <input type="email" id="email" value="rafisofyan114111@gmail.com" disabled>
             </div>
 
-            <!-- Tombol Aksi -->
+            <div class="section-title">Keahlian / Fokus</div>
+            <div class="skills-container">
+                <span class="skill-badge">HTML</span>
+                <span class="skill-badge">PUISI</span>
+                <span class="skill-badge">DESAIN GRAFIS</span>
+            </div>
+
             <div class="button-group">
                 <button type="button" class="btn btn-save" id="btn-simpan" onclick="kunciDanSimpan()" style="display: none;">🔒 Simpan & Kunci</button>
                 <button type="button" class="btn btn-unlock" id="btn-buka" onclick="bukaKunci()">🔓 Buka Kunci Untuk Edit</button>
@@ -239,23 +261,23 @@
 </div>
 
 <script>
-    // Id elemen input form
-    const inputIds = ['nama', 'instansi', 'status', 'alamat', 'hp', 'email'];
+    // Id elemen input form yang akan dikontrol oleh sistem penguncian
+    const inputIds = ['nama', 'ttl', 'gender', 'alamat', 'hp', 'email'];
 
     // Inisialisasi awal saat halaman dibuka
     window.onload = function() {
-        // Cek jika user pernah mengubah data di browser ini sebelumnya
-        let isSetup = localStorage.getItem('isSetupDone');
+        // Cek jika pengguna pernah memodifikasi data sebelumnya di browser ini
+        let isSetup = localStorage.getItem('isSetupDone_v2');
         
         if (!isSetup) {
-            // Jika pertama kali dibuka, simpan data bawaan gambar ke LocalStorage
+            // Simpan data parameter teks yang baru saja Anda berikan ke LocalStorage sebagai default awal
             inputIds.forEach(id => {
                 localStorage.setItem(id, document.getElementById(id).value);
             });
             localStorage.setItem('isLocked', 'true');
-            localStorage.setItem('isSetupDone', 'true');
+            localStorage.setItem('isSetupDone_v2', 'true');
         } else {
-            // Jika sudah ada riwayat modifikasi, muat data dari LocalStorage
+            // Jika ada perubahan manual sebelumnya, muat data modifikasi tersebut
             inputIds.forEach(id => {
                 const savedValue = localStorage.getItem(id);
                 if (savedValue !== null) document.getElementById(id).value = savedValue;
@@ -267,7 +289,7 @@
         terapkanStatusKunci(isLocked);
     };
 
-    // Fungsi untuk mengunci kembali form dan menyimpan perubahan
+    // Fungsi untuk menyimpan perubahan data manual ke memori browser lalu menguncinya kembali
     function kunciDanSimpan() {
         inputIds.forEach(id => {
             const value = document.getElementById(id).value;
@@ -277,23 +299,22 @@
         localStorage.setItem('isLocked', 'true');
         terapkanStatusKunci(true);
         
-        // Perbarui teks header
+        // Perbarui teks nama di banner atas
         document.getElementById('display-nama').innerText = document.getElementById('nama').value;
-        document.getElementById('display-instansi').innerText = document.getElementById('instansi').value + " - " + document.getElementById('status').value;
 
-        alert("Perubahan berhasil disimpan dan data kembali terkunci otomatis!");
+        alert("Data baru berhasil disimpan dan dikunci otomatis!");
     }
 
-    // Fungsi membuka kunci agar bisa diisi manual
+    // Fungsi untuk membuka sistem penguncian kolom form
     function bukaKunci() {
-        const konfirmasi = confirm("Apakah Anda ingin membuka kunci untuk mengedit data?");
+        const konfirmasi = confirm("Apakah Anda yakin ingin membuka kunci untuk mengedit data?");
         if (konfirmasi) {
             localStorage.setItem('isLocked', 'false');
             terapkanStatusKunci(false);
         }
     }
 
-    // Fungsi pengatur UI form (Mengunci / Membuka)
+    // Mengatur kondisi elemen HTML form (Terbuka / Terkunci)
     function terapkanStatusKunci(lock) {
         const statusBadge = document.getElementById('status-kunci');
         const btnSimpan = document.getElementById('btn-simpan');
@@ -309,9 +330,8 @@
             btnSimpan.style.display = "none";
             btnBuka.style.display = "block";
             
-            // Render ulang teks header dari input yang tersimpan
+            // Render ulang teks nama di header
             document.getElementById('display-nama').innerText = document.getElementById('nama').value;
-            document.getElementById('display-instansi').innerText = document.getElementById('instansi').value + " - " + document.getElementById('status').value;
         } else {
             statusBadge.innerText = "🔓 Mode Edit: Silakan Isi / Ubah Data";
             statusBadge.className = "status-badge status-unlocked";
